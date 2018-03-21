@@ -10,8 +10,8 @@ import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.method.support.ModelAndViewContainer;
 import bs.configs.Config;
-import bs.information.UserEntity;
-import bs.information.UserRepository;
+import bs.user.UserEntity;
+import bs.user.UserRepository;
 import bs.session.CurrentUser;
 
 /**
@@ -36,6 +36,6 @@ public class CurrentUserInterceptor implements HandlerMethodArgumentResolver {
     @Override
     public Object resolveArgument(@NotNull MethodParameter parameter, @NotNull ModelAndViewContainer mavContainer, @NotNull NativeWebRequest webRequest, @NotNull WebDataBinderFactory binderFactory) throws Exception {
         Object uid = webRequest.getAttribute(Config.CURRENT_UID_ATTRIBUTE, RequestAttributes.SCOPE_REQUEST);
-        return userRepository.findByUid((String) uid);
+        return userRepository.findByEmail((String) uid);
     }
 }

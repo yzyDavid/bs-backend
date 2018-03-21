@@ -1,4 +1,4 @@
-package bs.information;
+package bs.user;
 
 import org.springframework.data.repository.CrudRepository;
 
@@ -11,7 +11,11 @@ public interface UserRepository extends CrudRepository<UserEntity, Long> {
      * @return boolean
      * check exists of a UID
      */
-    boolean existsByUid(String uid);
+    boolean existsByEmail(String email);
 
-    UserEntity findByUid(String uid);
+    UserEntity findByEmail(String email);
+
+    boolean existsByName(String name);
+
+    UserEntity findByName(String name);
 }

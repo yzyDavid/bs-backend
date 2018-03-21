@@ -7,8 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import bs.information.UserEntity;
-import bs.information.UserRepository;
+import bs.user.UserEntity;
+import bs.user.UserRepository;
 import bs.utils.SecurityUtils;
 import bs.utils.SessionUtils;
 
@@ -35,11 +35,11 @@ public class SessionController {
 
     @PostMapping(path = "/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest login) {
-        if (!userRepository.existsByUid(login.getUid())) {
+        if (!userRepository.existsByEmail(login.getUid())) {
             return new ResponseEntity<>(new LoginResponse("", "", "User not exists"), HttpStatus.BAD_REQUEST);
         }
 
-        UserEntity user = userRepository.findByUid(login.getUid());
+        UserEntity user = userRepository.findByEmail(login.getUid());
         if (!user.getHashedPassword().equals(SecurityUtils.getHashedPasswordByPasswordAndSalt(login.getPassword(), user.getSalt()))) {
             return new ResponseEntity<>(new LoginResponse("", "", "Password incorrect"), HttpStatus.BAD_REQUEST);
         }

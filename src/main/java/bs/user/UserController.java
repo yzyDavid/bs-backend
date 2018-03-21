@@ -1,4 +1,4 @@
-package bs.information;
+package bs.user;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -27,13 +27,17 @@ public class UserController {
 
     @PutMapping(path = "")
     public ResponseEntity<AddUserResponse> add(@RequestBody AddUserRequest user) {
-        String uid = user.getUid();
-        if (userRepository.existsByUid(uid)) {
-            return new ResponseEntity<>(new AddUserResponse("failed with duplicated uid", "", ""), HttpStatus.BAD_REQUEST);
+        String email = user.getEmail();
+        if (userRepository.existsByEmail(email)) {
+            return new ResponseEntity<>(new AddUserResponse("failed with duplicated email", "", ""), HttpStatus.BAD_REQUEST);
+        }
+        String name = user.getName();
+        if (userRepository.existsByName(name)) {
+            return new ResponseEntity<>(new AddUserResponse("failed with duplicated user name", "", ""), HttpStatus.BAD_REQUEST);
         }
 
         UserEntity entity = new UserEntity();
-        entity.setUid(uid);
+        entity.setEmail(email);
         entity.setName(user.getName());
         String salt = getSalt();
         String hashedPassword = getHashedPasswordByPasswordAndSalt(user.getPassword(), salt);
@@ -41,6 +45,6 @@ public class UserController {
         entity.setHashedPassword(hashedPassword);
 
         userRepository.save(entity);
-        return new ResponseEntity<>(new AddUserResponse("OK", uid, user.getName()), HttpStatus.CREATED);
+        return new ResponseEntity<>(new AddUserResponse("OK", email, user.getName()), HttpStatus.CREATED);
     }
 }

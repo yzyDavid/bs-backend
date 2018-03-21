@@ -1,4 +1,4 @@
-package bs.information;
+package bs.user;
 
 import org.jetbrains.annotations.Nls;
 

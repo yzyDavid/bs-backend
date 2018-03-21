@@ -3,7 +3,7 @@ package bs.echo;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import bs.information.UserEntity;
+import bs.user.UserEntity;
 import bs.session.Authorization;
 import bs.session.CurrentUser;
 
@@ -21,6 +21,6 @@ public class EchoController {
     @GetMapping("/auth")
     @Authorization
     public String auth(@CurrentUser UserEntity user) {
-        return "Login as " + user.getUid();
+        return "Login as " + user.getEmail();
     }
 }

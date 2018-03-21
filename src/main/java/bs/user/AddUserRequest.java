@@ -1,15 +1,15 @@
-package bs.information;
+package bs.user;
 
 /**
  * @author yzy
  */
 public class AddUserRequest {
-    private String uid;
+    private String email;
     private String name;
     private String password;
 
-    public String getUid() {
-        return uid;
+    public String getEmail() {
+        return email;
     }
 
     public String getName() {
@@ -20,8 +20,8 @@ public class AddUserRequest {
         return password;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setName(String name) {

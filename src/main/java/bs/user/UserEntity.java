@@ -1,4 +1,4 @@
-package bs.information;
+package bs.user;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +16,7 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String uid;
+    private String email;
 
     private String name;
 
@@ -32,12 +32,12 @@ public class UserEntity {
         this.name = name;
     }
 
-    public String getUid() {
-        return uid;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Long getId() {
