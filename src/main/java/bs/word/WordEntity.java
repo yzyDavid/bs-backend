@@ -1,5 +1,7 @@
 package bs.word;
 
+import bs.user.UserEntity;
+
 import javax.persistence.*;
 import java.util.Collection;
 
@@ -21,6 +23,9 @@ public class WordEntity {
             inverseJoinColumns = {@JoinColumn(name = "WORD_ID", referencedColumnName = "id")})
     @ManyToMany
     private Collection<WordbookEntity> wordbooks;
+
+    @ManyToMany(mappedBy = "wordsStudying")
+    private Collection<UserEntity> usersStudying;
 
     public Long getId() {
         return id;
@@ -52,5 +57,13 @@ public class WordEntity {
 
     public void setMeaning(String meaning) {
         this.meaning = meaning;
+    }
+
+    public Collection<UserEntity> getUsersStudying() {
+        return usersStudying;
+    }
+
+    public void setUsersStudying(Collection<UserEntity> usersStudying) {
+        this.usersStudying = usersStudying;
     }
 }

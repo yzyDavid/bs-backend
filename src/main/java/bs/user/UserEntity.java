@@ -1,9 +1,9 @@
 package bs.user;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import bs.word.WordEntity;
+
+import javax.persistence.*;
+import java.util.Collection;
 
 /**
  * @author yzy
@@ -23,6 +23,12 @@ public class UserEntity {
     private String hashedPassword;
 
     private String salt;
+
+    @JoinTable(name = "USER_WORD_STUDYING",
+    joinColumns = {@JoinColumn(name = "WORD_ID", referencedColumnName = "id")},
+    inverseJoinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "id")})
+    @ManyToMany
+    private Collection<WordEntity> wordsStudying;
 
     public String getName() {
         return name;
@@ -62,5 +68,13 @@ public class UserEntity {
 
     public void setSalt(String salt) {
         this.salt = salt;
+    }
+
+    public Collection<WordEntity> getWordsStudying() {
+        return wordsStudying;
+    }
+
+    public void setWordsStudying(Collection<WordEntity> wordsStudying) {
+        this.wordsStudying = wordsStudying;
     }
 }

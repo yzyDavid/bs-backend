@@ -14,7 +14,7 @@ public class WordbookEntity {
 
     private String wordbookName;
 
-    @ManyToMany
+    @ManyToMany(mappedBy = "wordbooks")
     private Collection<WordEntity> words;
 
     public Long getId() {
