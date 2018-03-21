@@ -2,6 +2,7 @@ package bs.word;
 
 import bs.session.Authorization;
 import bs.session.CurrentUser;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ public class WordController {
 
     private final WordbookRepository wordbookRepository;
 
+    @Autowired
     public WordController(WordRepository wordRepository, WordbookRepository wordbookRepository) {
         this.wordRepository = wordRepository;
         this.wordbookRepository = wordbookRepository;
