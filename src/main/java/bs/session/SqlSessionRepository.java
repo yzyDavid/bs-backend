@@ -6,9 +6,9 @@ import org.springframework.data.repository.CrudRepository;
  * @author yzy
  */
 public interface SqlSessionRepository extends CrudRepository<SessionEntity, Long> {
-    boolean existsByUid(String uid);
+    boolean existsByEmail(String uid);
 
-    SessionEntity findByUid(String uid);
+    SessionEntity findByEmail(String uid);
 
     boolean existsByToken(String token);
 

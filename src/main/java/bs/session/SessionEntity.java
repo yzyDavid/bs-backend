@@ -11,7 +11,7 @@ import java.sql.Timestamp;
 @Entity
 @Table(name="SESSION_ENTITY",
         indexes = {
-        @Index(name = "uidIndex", columnList = "uid", unique = true),
+        @Index(name = "emailIndex", columnList = "email", unique = true),
         @Index(name = "tokenIndex", columnList = "token")
 })
 public class SessionEntity {
@@ -19,7 +19,7 @@ public class SessionEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String uid;
+    private String email;
 
     /**
      * TODO: expire control
@@ -37,12 +37,12 @@ public class SessionEntity {
         this.id = id;
     }
 
-    public String getUid() {
-        return uid;
+    public String getEmail() {
+        return email;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public Timestamp getTimestamp() {

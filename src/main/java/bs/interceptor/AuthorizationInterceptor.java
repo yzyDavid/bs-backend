@@ -40,7 +40,7 @@ public class AuthorizationInterceptor extends HandlerInterceptorAdapter {
 
         if (sqlSessionRepository.existsByToken(auth)) {
             SessionEntity session = sqlSessionRepository.findByToken(auth);
-            String uid = session.getUid();
+            String uid = session.getEmail();
             request.setAttribute(Config.CURRENT_UID_ATTRIBUTE, uid);
         } else {
             // invalid auth provided.

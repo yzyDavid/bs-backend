@@ -45,13 +45,13 @@ public class SessionController {
         }
 
         SessionEntity session = new SessionEntity();
-        session.setUid(login.getUid());
+        session.setEmail(login.getUid());
         session.setToken(SessionUtils.getToken());
         session.setTimestamp(Timestamp.valueOf(LocalDateTime.now()));
 
-        if (sqlSessionRepository.existsByUid(login.getUid())) {
+        if (sqlSessionRepository.existsByEmail(login.getUid())) {
             // TODO: process with duplicated insert.
-            SessionEntity sessionToRemove = sqlSessionRepository.findByUid(login.getUid());
+            SessionEntity sessionToRemove = sqlSessionRepository.findByEmail(login.getUid());
             sqlSessionRepository.delete(sessionToRemove);
         }
 
