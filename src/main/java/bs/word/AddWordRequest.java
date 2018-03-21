@@ -2,6 +2,9 @@ package bs.word;
 
 import java.util.ArrayList;
 
+/**
+ * @author yzy
+ */
 public class AddWordRequest {
     private String word;
 
