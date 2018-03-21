@@ -6,12 +6,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
-public class WordEntity {
+public class WordbookEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String word;
+    private String wordbookName;
 
     public Long getId() {
         return id;
@@ -21,11 +21,11 @@ public class WordEntity {
         this.id = id;
     }
 
-    public String getWord() {
-        return word;
+    public String getWordbookName() {
+        return wordbookName;
     }
 
-    public void setWord(String word) {
-        this.word = word;
+    public void setWordbookName(String wordbookName) {
+        this.wordbookName = wordbookName;
     }
 }

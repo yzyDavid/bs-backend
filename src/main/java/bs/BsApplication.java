@@ -6,9 +6,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 /**
  * @author yzy
  */
+
 @SpringBootApplication
-public class TssApplication {
+public class BsApplication {
     public static void main(String[] args) {
-        SpringApplication.run(TssApplication.class, args);
+        SpringApplication.run(BsApplication.class, args);
     }
 }
