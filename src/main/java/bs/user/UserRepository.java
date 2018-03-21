@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface UserRepository extends CrudRepository<UserEntity, Long> {
     /**
-     * @param uid
+     * @param email
      * @return boolean
      * check exists of a UID
      */
