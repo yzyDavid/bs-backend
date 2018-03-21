@@ -1,10 +1,11 @@
 package bs.word;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.Collection;
 
+/**
+ * @author yzy
+ */
 @Entity
 public class WordEntity {
     @Id
@@ -12,6 +13,12 @@ public class WordEntity {
     private Long id;
 
     private String word;
+
+    @JoinTable(name = "WORD_WORDBOOK",
+            joinColumns = {@JoinColumn(name = "WORDBOOK_ID", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "WORD_ID", referencedColumnName = "id")})
+    @ManyToMany
+    private Collection<WordbookEntity> wordbooks;
 
     public Long getId() {
         return id;
@@ -27,5 +34,13 @@ public class WordEntity {
 
     public void setWord(String word) {
         this.word = word;
+    }
+
+    public Collection<WordbookEntity> getWordbooks() {
+        return wordbooks;
+    }
+
+    public void setWordbooks(Collection<WordbookEntity> wordbooks) {
+        this.wordbooks = wordbooks;
     }
 }
