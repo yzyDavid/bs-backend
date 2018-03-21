@@ -14,6 +14,8 @@ public class WordEntity {
 
     private String word;
 
+    private String meaning;
+
     @JoinTable(name = "WORD_WORDBOOK",
             joinColumns = {@JoinColumn(name = "WORDBOOK_ID", referencedColumnName = "id")},
             inverseJoinColumns = {@JoinColumn(name = "WORD_ID", referencedColumnName = "id")})
@@ -42,5 +44,13 @@ public class WordEntity {
 
     public void setWordbooks(Collection<WordbookEntity> wordbooks) {
         this.wordbooks = wordbooks;
+    }
+
+    public String getMeaning() {
+        return meaning;
+    }
+
+    public void setMeaning(String meaning) {
+        this.meaning = meaning;
     }
 }
