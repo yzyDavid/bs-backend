@@ -9,9 +9,10 @@ import java.sql.Timestamp;
  * TODO: index not auto created.
  */
 @Entity
-@Table(indexes = {
+@Table(name="SESSION_ENTITY",
+        indexes = {
         @Index(name = "uidIndex", columnList = "uid", unique = true),
-        @Index(name = "tokenIndex", columnList = "token", unique = true)
+        @Index(name = "tokenIndex", columnList = "token")
 })
 public class SessionEntity {
     @Id
