@@ -7,7 +7,7 @@ import javax.persistence.*;
  */
 @Table(name = "USER_WORD_STUDYING")
 @Entity
-public class UserStudyingWordTable {
+public class UserStudyingWordRelation {
     @Id
     @GeneratedValue
     private long id;
@@ -19,6 +19,8 @@ public class UserStudyingWordTable {
     private long wordId;
 
     private int rank;
+
+    private boolean studied;
 
     public long getUserId() {
         return userId;
@@ -42,5 +44,13 @@ public class UserStudyingWordTable {
 
     public void setRank(int rank) {
         this.rank = rank;
+    }
+
+    public boolean isStudied() {
+        return studied;
+    }
+
+    public void setStudied(boolean studied) {
+        this.studied = studied;
     }
 }
