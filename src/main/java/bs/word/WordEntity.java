@@ -14,6 +14,7 @@ public class WordEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(length = 50)
     private String word;
 
     private String meaning;

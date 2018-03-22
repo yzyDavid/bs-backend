@@ -5,8 +5,6 @@ import java.sql.Timestamp;
 
 /**
  * @author yzy
- *
- * TODO: index not auto created.
  */
 @Entity
 @Table(name="SESSION_ENTITY",
@@ -19,6 +17,7 @@ public class SessionEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(length = 80)
     private String email;
 
     /**
@@ -27,6 +26,7 @@ public class SessionEntity {
     @GeneratedValue()
     private Timestamp timestamp;
 
+    @Column(length = 100)
     private String token;
 
     public Long getId() {

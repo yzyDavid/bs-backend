@@ -5,9 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * @author yzy
@@ -33,5 +31,15 @@ public class WordbookController {
             return new ResponseEntity(HttpStatus.CREATED);
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
+
+    @Authorization
+    @GetMapping(path = "/words")
+    public ResponseEntity<WordsOfWordbookResponse> wordsOfWordbook(@RequestParam(name = "wordbook") String wordbookName) {
+        if (!wordbookRepository.existsByWordbookName(wordbookName)) {
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
+        WordbookEntity wordbook = wordbookRepository.findByWordbookName(wordbookName);
+        return new ResponseEntity<>(new WordsOfWordbookResponse(wordbook.getWords()), HttpStatus.OK);
     }
 }

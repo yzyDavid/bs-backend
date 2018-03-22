@@ -16,12 +16,16 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(length = 80)
     private String email;
 
+    @Column(length = 40)
     private String name;
 
+    @Column(length = 100)
     private String hashedPassword;
 
+    @Column(length = 60)
     private String salt;
 
     @JoinTable(name = "USER_WORD_STUDYING",

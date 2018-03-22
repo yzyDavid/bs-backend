@@ -12,6 +12,7 @@ public class WordbookEntity {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @Column(length = 100)
     private String wordbookName;
 
     @ManyToMany(mappedBy = "wordbooks")
