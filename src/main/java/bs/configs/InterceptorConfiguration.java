@@ -6,10 +6,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
-import bs.user.UserRepository;
-import bs.interceptor.AuthorizationInterceptor;
-import bs.interceptor.CurrentUserInterceptor;
-import bs.session.SqlSessionRepository;
+import bs.repositories.UserRepository;
+import bs.interceptors.AuthorizationInterceptor;
+import bs.interceptors.CurrentUserInterceptor;
+import bs.repositories.SqlSessionRepository;
 
 import java.util.List;
 

@@ -3,9 +3,9 @@ package bs.echo;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import bs.user.UserEntity;
-import bs.session.Authorization;
-import bs.session.CurrentUser;
+import bs.entities.UserEntity;
+import bs.annotations.Authorization;
+import bs.annotations.CurrentUser;
 
 /**
  * @author yzy
