@@ -59,6 +59,7 @@ cmake-build-release/
 
 # IntelliJ
 out/
+build/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/
@@ -100,4 +101,6 @@ gradle-app.setting
 
 # manually added:
 src/main/resources/application.properties
+
+.DS_Store
 
