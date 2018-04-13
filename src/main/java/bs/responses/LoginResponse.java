@@ -6,19 +6,19 @@ import org.jetbrains.annotations.Nls;
  * @author yzy
  */
 public class LoginResponse {
-    private final String uid;
+    private final String email;
     private final String token;
     private final @Nls
     String info;
 
-    public LoginResponse(String uid, String token, String info) {
-        this.uid = uid;
+    public LoginResponse(String email, String token, String info) {
+        this.email = email;
         this.token = token;
         this.info = info;
     }
 
-    public String getUid() {
-        return uid;
+    public String getEmail() {
+        return email;
     }
 
     public String getToken() {

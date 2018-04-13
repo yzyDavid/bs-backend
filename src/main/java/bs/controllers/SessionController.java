@@ -39,28 +39,28 @@ public class SessionController {
 
     @PostMapping(path = "/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest login) {
-        if (!userRepository.existsByEmail(login.getUid())) {
+        if (!userRepository.existsByEmail(login.getEmail())) {
             return new ResponseEntity<>(new LoginResponse("", "", "User not exists"), HttpStatus.BAD_REQUEST);
         }
 
-        UserEntity user = userRepository.findByEmail(login.getUid());
+        UserEntity user = userRepository.findByEmail(login.getEmail());
         if (!user.getHashedPassword().equals(SecurityUtils.getHashedPasswordByPasswordAndSalt(login.getPassword(), user.getSalt()))) {
             return new ResponseEntity<>(new LoginResponse("", "", "Password incorrect"), HttpStatus.BAD_REQUEST);
         }
 
         SessionEntity session = new SessionEntity();
-        session.setEmail(login.getUid());
+        session.setEmail(login.getEmail());
         session.setToken(SessionUtils.getToken());
         session.setTimestamp(Timestamp.valueOf(LocalDateTime.now()));
 
-        if (sqlSessionRepository.existsByEmail(login.getUid())) {
+        if (sqlSessionRepository.existsByEmail(login.getEmail())) {
             // TODO: process with duplicated insert.
-            SessionEntity sessionToRemove = sqlSessionRepository.findByEmail(login.getUid());
+            SessionEntity sessionToRemove = sqlSessionRepository.findByEmail(login.getEmail());
             sqlSessionRepository.delete(sessionToRemove);
         }
 
         sqlSessionRepository.save(session);
 
-        return new ResponseEntity<>(new LoginResponse(login.getUid(), session.getToken(), "OK"), HttpStatus.OK);
+        return new ResponseEntity<>(new LoginResponse(login.getEmail(), session.getToken(), "OK"), HttpStatus.OK);
     }
 }

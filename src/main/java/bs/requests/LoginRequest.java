@@ -4,19 +4,19 @@ package bs.requests;
  * @author yzy
  */
 public class LoginRequest {
-    private String uid;
+    private String email;
     private String password;
 
-    public String getUid() {
-        return uid;
+    public String getEmail() {
+        return email;
     }
 
     public String getPassword() {
         return password;
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public void setPassword(String password) {
