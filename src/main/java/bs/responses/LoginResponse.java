@@ -8,12 +8,14 @@ import org.jetbrains.annotations.Nls;
 public class LoginResponse {
     private final String email;
     private final String token;
+    private final String username;
     private final @Nls
     String info;
 
-    public LoginResponse(String email, String token, String info) {
+    public LoginResponse(String email, String token, String username, String info) {
         this.email = email;
         this.token = token;
+        this.username = username;
         this.info = info;
     }
 
@@ -27,5 +29,9 @@ public class LoginResponse {
 
     public String getInfo() {
         return info;
+    }
+
+    public String getUsername() {
+        return username;
     }
 }

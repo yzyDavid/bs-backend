@@ -40,12 +40,12 @@ public class SessionController {
     @PostMapping(path = "/login")
     public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest login) {
         if (!userRepository.existsByEmail(login.getEmail())) {
-            return new ResponseEntity<>(new LoginResponse("", "", "User not exists"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new LoginResponse("", "", username, "User not exists"), HttpStatus.BAD_REQUEST);
         }
 
         UserEntity user = userRepository.findByEmail(login.getEmail());
         if (!user.getHashedPassword().equals(SecurityUtils.getHashedPasswordByPasswordAndSalt(login.getPassword(), user.getSalt()))) {
-            return new ResponseEntity<>(new LoginResponse("", "", "Password incorrect"), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(new LoginResponse("", "", username, "Password incorrect"), HttpStatus.BAD_REQUEST);
         }
 
         SessionEntity session = new SessionEntity();
@@ -61,6 +61,6 @@ public class SessionController {
 
         sqlSessionRepository.save(session);
 
-        return new ResponseEntity<>(new LoginResponse(login.getEmail(), session.getToken(), "OK"), HttpStatus.OK);
+        return new ResponseEntity<>(new LoginResponse(login.getEmail(), session.getToken(), user.getName(), "OK"), HttpStatus.OK);
     }
 }
