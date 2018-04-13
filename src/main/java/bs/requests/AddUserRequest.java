@@ -5,15 +5,15 @@ package bs.requests;
  */
 public class AddUserRequest {
     private String email;
-    private String name;
+    private String username;
     private String password;
 
     public String getEmail() {
         return email;
     }
 
-    public String getName() {
-        return name;
+    public String getUsername() {
+        return username;
     }
 
     public String getPassword() {
@@ -24,8 +24,8 @@ public class AddUserRequest {
         this.email = email;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setUsername(String username) {
+        this.username = username;
     }
 
     public void setPassword(String password) {

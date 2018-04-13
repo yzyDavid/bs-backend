@@ -35,20 +35,20 @@ public class UserController {
         if (userRepository.existsByEmail(email)) {
             return new ResponseEntity<>(new AddUserResponse("failed with duplicated email", "", ""), HttpStatus.BAD_REQUEST);
         }
-        String name = user.getName();
+        String name = user.getUsername();
         if (userRepository.existsByName(name)) {
             return new ResponseEntity<>(new AddUserResponse("failed with duplicated user name", "", ""), HttpStatus.BAD_REQUEST);
         }
 
         UserEntity entity = new UserEntity();
         entity.setEmail(email);
-        entity.setName(user.getName());
+        entity.setName(user.getUsername());
         String salt = getSalt();
         String hashedPassword = getHashedPasswordByPasswordAndSalt(user.getPassword(), salt);
         entity.setSalt(salt);
         entity.setHashedPassword(hashedPassword);
 
         userRepository.save(entity);
-        return new ResponseEntity<>(new AddUserResponse("OK", email, user.getName()), HttpStatus.CREATED);
+        return new ResponseEntity<>(new AddUserResponse("OK", email, user.getUsername()), HttpStatus.CREATED);
     }
 }
