@@ -8,4 +8,6 @@ import org.springframework.data.repository.CrudRepository;
  */
 public interface WordRepository extends CrudRepository<WordEntity, Long> {
     boolean existsByWord(String word);
+
+    WordEntity getById(long id);
 }
