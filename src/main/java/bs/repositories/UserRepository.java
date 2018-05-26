@@ -6,6 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 /**
  * @author yzy
  */
+@SuppressWarnings("AlibabaAbstractMethodOrInterfaceMethodMustUseJavadoc")
 public interface UserRepository extends CrudRepository<UserEntity, Long> {
     /**
      * @param email
