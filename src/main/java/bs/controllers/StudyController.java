@@ -10,6 +10,8 @@ import bs.repositories.WordRepository;
 import bs.requests.FinishWordRequest;
 import bs.responses.FinishWordResponse;
 import bs.responses.TodayResponse;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,9 +27,11 @@ import java.util.ArrayList;
  * @author yzy
  * for study relative operations when a user is logged in.
  */
-@RequestMapping(path = "/study")
 @Controller
+@RequestMapping(path = "/study")
 public class StudyController {
+    private Log logger;
+
     private final UserStudyingWordRepository userStudyingWordRepository;
     private final WordRepository wordRepository;
 
@@ -35,20 +39,23 @@ public class StudyController {
     public StudyController(UserStudyingWordRepository userStudyingWordRepository, WordRepository wordRepository) {
         this.userStudyingWordRepository = userStudyingWordRepository;
         this.wordRepository = wordRepository;
+        this.logger = LogFactory.getLog(this.getClass());
     }
 
     /**
      * @param user
-     * @return
-     *
-     * get words the user need to study today.
+     * @return get words the user need to study today.
      */
     @Authorization
     @GetMapping(path = "/today")
-    TodayResponse today(@CurrentUser UserEntity user) {
+    ResponseEntity<TodayResponse> today(@CurrentUser UserEntity user) {
+        logger.info("/study/today");
         ArrayList<WordEntity> wordList = new ArrayList<>();
         Iterable<UserStudyingWordRelation> relations = userStudyingWordRepository.findAllByUserId(user.getId());
         for (UserStudyingWordRelation relation : relations) {
+            if (!relation.shouldBeStudiedToday()) {
+                continue;
+            }
             if (relation.isStudied()) {
                 continue;
             }
@@ -57,21 +64,20 @@ public class StudyController {
             WordEntity word = wordRepository.getById(wordId);
             wordList.add(word);
         }
-        return new TodayResponse(wordList);
+        return new ResponseEntity<>(new TodayResponse(wordList), HttpStatus.OK);
     }
 
     @Authorization
     @PostMapping(path = "/finish_word")
     FinishWordResponse finishWord(@RequestBody FinishWordRequest request, @CurrentUser UserEntity user) {
+        String word = request.getWord();
         // TODO:
         return new FinishWordResponse();
     }
 
     /**
      * @param user
-     * @return
-     *
-     * get stats of the user.
+     * @return get stats of the user.
      * including numbers of words he/she added, studied and queued.
      * TODO
      */

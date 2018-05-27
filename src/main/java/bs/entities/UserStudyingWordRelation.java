@@ -1,5 +1,7 @@
 package bs.entities;
 
+import bs.configs.Config;
+
 import javax.persistence.*;
 
 /**
@@ -18,6 +20,9 @@ public class UserStudyingWordRelation {
     @Column(name = "WORD_ID")
     private long wordId;
 
+    /**
+     * A countdown for if the word should be studied today.
+     */
     private int rank;
 
     private boolean studied;
@@ -52,5 +57,9 @@ public class UserStudyingWordRelation {
 
     public void setStudied(boolean studied) {
         this.studied = studied;
+    }
+
+    public boolean shouldBeStudiedToday() {
+        return Config.RECALL_DAYS.contains(this.getRank());
     }
 }
