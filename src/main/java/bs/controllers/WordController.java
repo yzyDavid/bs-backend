@@ -1,5 +1,6 @@
 package bs.controllers;
 
+import bs.entities.UserEntity;
 import bs.entities.WordEntity;
 import bs.entities.WordbookEntity;
 import bs.repositories.WordRepository;
@@ -35,7 +36,7 @@ public class WordController {
 
     @Authorization
     @PutMapping
-    public ResponseEntity addWord(@RequestBody AddWordRequest addWordRequest, @CurrentUser CurrentUser user) {
+    public ResponseEntity addWord(@RequestBody AddWordRequest addWordRequest, @CurrentUser UserEntity user) {
         if (wordRepository.existsByWord(addWordRequest.getWord())) {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }

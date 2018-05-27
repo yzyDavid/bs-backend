@@ -11,6 +11,8 @@ import bs.requests.FinishWordRequest;
 import bs.responses.FinishWordResponse;
 import bs.responses.TodayResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -35,6 +37,12 @@ public class StudyController {
         this.wordRepository = wordRepository;
     }
 
+    /**
+     * @param user
+     * @return
+     *
+     * get words the user need to study today.
+     */
     @Authorization
     @GetMapping(path = "/today")
     TodayResponse today(@CurrentUser UserEntity user) {
@@ -57,5 +65,19 @@ public class StudyController {
     FinishWordResponse finishWord(@RequestBody FinishWordRequest request, @CurrentUser UserEntity user) {
         // TODO:
         return new FinishWordResponse();
+    }
+
+    /**
+     * @param user
+     * @return
+     *
+     * get stats of the user.
+     * including numbers of words he/she added, studied and queued.
+     * TODO
+     */
+    @Authorization
+    @GetMapping(path = "/stats")
+    public ResponseEntity stats(@CurrentUser UserEntity user) {
+        return new ResponseEntity(HttpStatus.OK);
     }
 }
