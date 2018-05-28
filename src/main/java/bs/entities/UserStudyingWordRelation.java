@@ -6,6 +6,7 @@ import javax.persistence.*;
 
 /**
  * @author yzy
+ * TODO: set primary key
  */
 @Table(name = "USER_WORD_STUDYING")
 @Entity
@@ -25,6 +26,9 @@ public class UserStudyingWordRelation {
      */
     private int rank;
 
+    /**
+     * Whether the word is studied TODAY.
+     */
     private boolean studied;
 
     public long getUserId() {
