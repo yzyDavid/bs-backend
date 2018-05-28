@@ -10,7 +10,7 @@ import java.util.Collection;
  * today to study words list.
  */
 public class TodayResponse {
-    private Collection<WordEntity> words;
+    private final Collection<WordEntity> words;
 
     public TodayResponse(Collection<WordEntity> words) {
         this.words = words;

@@ -1,9 +1,10 @@
 package bs.controllers;
 
+import bs.annotations.Authorization;
 import bs.entities.WordbookEntity;
 import bs.repositories.WordbookRepository;
-import bs.annotations.Authorization;
 import bs.requests.AddWordbookRequest;
+import bs.responses.WordbookResponse;
 import bs.responses.WordsOfWordbookResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -35,6 +36,12 @@ public class WordbookController {
             return new ResponseEntity(HttpStatus.CREATED);
         }
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
+    }
+
+    @Authorization
+    @GetMapping(path = "/all")
+    public ResponseEntity<WordbookResponse> getWordbooks() {
+        return new ResponseEntity<>(new WordbookResponse(wordbookRepository.findAll()), HttpStatus.OK);
     }
 
     @Authorization
