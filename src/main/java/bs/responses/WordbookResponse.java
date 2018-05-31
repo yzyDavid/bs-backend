@@ -1,17 +1,18 @@
 package bs.responses;
 
-import bs.entities.WordbookEntity;
-
 import java.util.Collection;
 
+/**
+ * @author yzy
+ */
 public class WordbookResponse {
-    private final Collection<WordbookEntity> wordbooks;
+    private final Collection<WordbookRepresentation> wordbooks;
 
-    public WordbookResponse(Collection<WordbookEntity> wordbooks) {
+    public WordbookResponse(Collection<WordbookRepresentation> wordbooks) {
         this.wordbooks = wordbooks;
     }
 
-    public Collection<WordbookEntity> getWordbooks() {
+    public Collection<WordbookRepresentation> getWordbooks() {
         return wordbooks;
     }
 }

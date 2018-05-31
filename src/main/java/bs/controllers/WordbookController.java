@@ -4,6 +4,7 @@ import bs.annotations.Authorization;
 import bs.entities.WordbookEntity;
 import bs.repositories.WordbookRepository;
 import bs.requests.AddWordbookRequest;
+import bs.responses.WordbookRepresentation;
 import bs.responses.WordbookResponse;
 import bs.responses.WordsOfWordbookResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * @author yzy
@@ -41,7 +45,12 @@ public class WordbookController {
     @Authorization
     @GetMapping(path = "/all")
     public ResponseEntity<WordbookResponse> getWordbooks() {
-        return new ResponseEntity<>(new WordbookResponse(wordbookRepository.findAll()), HttpStatus.OK);
+        Collection<WordbookEntity> all = wordbookRepository.findAll();
+        ArrayList<WordbookRepresentation> representations = new ArrayList<>();
+        for (WordbookEntity entity : all) {
+            representations.add(new WordbookRepresentation(entity));
+        }
+        return new ResponseEntity<>(new WordbookResponse(representations), HttpStatus.OK);
     }
 
     @Authorization
