@@ -1,7 +1,5 @@
 package bs.responses;
 
-import bs.entities.WordEntity;
-
 import java.util.Collection;
 
 /**
@@ -10,13 +8,13 @@ import java.util.Collection;
  * today to study words list.
  */
 public class TodayResponse {
-    private final Collection<WordEntity> words;
+    private final Collection<WordRepresentation> words;
 
-    public TodayResponse(Collection<WordEntity> words) {
+    public TodayResponse(Collection<WordRepresentation> words) {
         this.words = words;
     }
 
-    public Collection<WordEntity> getWords() {
+    public Collection<WordRepresentation> getWords() {
         return words;
     }
 }

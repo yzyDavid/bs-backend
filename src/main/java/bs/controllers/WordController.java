@@ -1,22 +1,26 @@
 package bs.controllers;
 
+import bs.annotations.Authorization;
+import bs.annotations.CurrentUser;
 import bs.entities.UserEntity;
 import bs.entities.WordEntity;
 import bs.entities.WordbookEntity;
 import bs.repositories.WordRepository;
 import bs.repositories.WordbookRepository;
-import bs.annotations.Authorization;
-import bs.annotations.CurrentUser;
 import bs.requests.AddWordRequest;
+import bs.responses.TodayResponse;
+import bs.responses.WordRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * @author yzy
@@ -58,5 +62,22 @@ public class WordController {
         wordRepository.save(wordEntity);
 
         return new ResponseEntity(HttpStatus.CREATED);
+    }
+
+    /**
+     * all words the user is studying.
+     *
+     * @param user
+     * @return
+     */
+    @Authorization
+    @GetMapping(path = "/my")
+    public ResponseEntity<TodayResponse> myWord(@CurrentUser UserEntity user) {
+        Collection<WordEntity> wordsStudying = user.getWordsStudying();
+        ArrayList<WordRepresentation> retList = new ArrayList<>();
+        for (WordEntity entity : wordsStudying) {
+            retList.add(new WordRepresentation(entity));
+        }
+        return new ResponseEntity<>(new TodayResponse(retList), HttpStatus.OK);
     }
 }

@@ -13,6 +13,7 @@ import bs.repositories.WordbookRepository;
 import bs.requests.AddWordbookRequest;
 import bs.requests.FinishWordRequest;
 import bs.responses.TodayResponse;
+import bs.responses.WordRepresentation;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -67,7 +68,11 @@ public class StudyController {
             WordEntity word = wordRepository.getById(wordId);
             wordList.add(word);
         }
-        return new ResponseEntity<>(new TodayResponse(wordList), HttpStatus.OK);
+        ArrayList<WordRepresentation> retList = new ArrayList<>();
+        for (WordEntity entity : wordList) {
+            retList.add(new WordRepresentation(entity));
+        }
+        return new ResponseEntity<>(new TodayResponse(retList), HttpStatus.OK);
     }
 
     @Authorization
