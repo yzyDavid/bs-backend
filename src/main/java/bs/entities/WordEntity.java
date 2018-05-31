@@ -18,8 +18,8 @@ public class WordEntity {
     private String meaning;
 
     @JoinTable(name = "WORD_WORDBOOK",
-            joinColumns = {@JoinColumn(name = "WORDBOOK_ID", referencedColumnName = "id")},
-            inverseJoinColumns = {@JoinColumn(name = "WORD_ID", referencedColumnName = "id")})
+            joinColumns = {@JoinColumn(name = "WORD_ID", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "WORDBOOK_ID", referencedColumnName = "id")})
     @ManyToMany
     private Collection<WordbookEntity> wordbooks;
 

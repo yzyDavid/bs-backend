@@ -8,10 +8,12 @@ import bs.entities.WordbookEntity;
 public class WordbookRepresentation {
     private long id;
     private String wordbookName;
+    private long wordCount;
 
     public WordbookRepresentation(WordbookEntity entity) {
         this.id = entity.getId();
         this.wordbookName = entity.getWordbookName();
+        this.wordCount = entity.getWords().size();
     }
 
     public String getWordbookName() {
@@ -20,5 +22,9 @@ public class WordbookRepresentation {
 
     public long getId() {
         return id;
+    }
+
+    public long getWordCount() {
+        return wordCount;
     }
 }
