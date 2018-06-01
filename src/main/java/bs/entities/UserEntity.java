@@ -27,8 +27,8 @@ public class UserEntity {
     private String salt;
 
     @JoinTable(name = "USER_WORD_STUDYING",
-    joinColumns = {@JoinColumn(name = "WORD_ID", referencedColumnName = "id")},
-    inverseJoinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "id")})
+    joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "id")},
+    inverseJoinColumns = {@JoinColumn(name = "WORD_ID", referencedColumnName = "id")})
     @ManyToMany
     private Collection<WordEntity> wordsStudying;
 
@@ -48,11 +48,11 @@ public class UserEntity {
         this.email = email;
     }
 
-    public Long getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(long id) {
         this.id = id;
     }
 

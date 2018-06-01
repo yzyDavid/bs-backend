@@ -5,6 +5,8 @@ import bs.entities.WordEntity;
 import java.util.Collection;
 
 /**
+ * TODO: fix with views
+ *
  * @author yzy
  */
 public class WordsOfWordbookResponse {

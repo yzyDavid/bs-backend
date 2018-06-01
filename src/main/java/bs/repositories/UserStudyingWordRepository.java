@@ -23,4 +23,6 @@ public interface UserStudyingWordRepository extends CrudRepository<UserStudyingW
      * TODO: test
      */
     UserStudyingWordRelation findByUserIdAndWordId(long userId, long wordId);
+
+    boolean existsByUserIdAndWordId(long userId, long wordId);
 }

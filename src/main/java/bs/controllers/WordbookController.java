@@ -1,6 +1,8 @@
 package bs.controllers;
 
 import bs.annotations.Authorization;
+import bs.annotations.CurrentUser;
+import bs.entities.UserEntity;
 import bs.entities.WordbookEntity;
 import bs.repositories.WordbookRepository;
 import bs.requests.AddWordbookRequest;
@@ -46,13 +48,21 @@ public class WordbookController {
     @GetMapping(path = "/all")
     public ResponseEntity<WordbookResponse> getWordbooks() {
         Collection<WordbookEntity> all = wordbookRepository.findAll();
-        ArrayList<WordbookRepresentation> representations = new ArrayList<>();
+        ArrayList<WordbookRepresentation> rep = new ArrayList<>();
         for (WordbookEntity entity : all) {
-            representations.add(new WordbookRepresentation(entity));
+            rep.add(new WordbookRepresentation(entity));
         }
-        return new ResponseEntity<>(new WordbookResponse(representations), HttpStatus.OK);
+        return new ResponseEntity<>(new WordbookResponse(rep), HttpStatus.OK);
     }
 
+    /**
+     * TODO: replace with AddWordbookRequest
+     *
+     * get words of a wordbook.
+     *
+     * @param wordbookName
+     * @return
+     */
     @Authorization
     @GetMapping(path = "/words")
     public ResponseEntity<WordsOfWordbookResponse> wordsOfWordbook(@RequestParam(name = "wordbook") String wordbookName) {

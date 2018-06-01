@@ -1,9 +1,15 @@
 package bs.controllers;
 
+import bs.annotations.Authorization;
+import bs.annotations.CurrentUser;
 import bs.entities.SessionEntity;
+import bs.entities.UserEntity;
 import bs.repositories.SqlSessionRepository;
+import bs.repositories.UserRepository;
 import bs.requests.LoginRequest;
 import bs.responses.LoginResponse;
+import bs.utils.SecurityUtils;
+import bs.utils.SessionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,10 +17,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import bs.entities.UserEntity;
-import bs.repositories.UserRepository;
-import bs.utils.SecurityUtils;
-import bs.utils.SessionUtils;
 
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
@@ -62,5 +64,17 @@ public class SessionController {
         sqlSessionRepository.save(session);
 
         return new ResponseEntity<>(new LoginResponse(login.getEmail(), session.getToken(), user.getName(), "OK"), HttpStatus.OK);
+    }
+
+    /**
+     * TODO
+     *
+     * @param user
+     * @return
+     */
+    @PostMapping(path = "logout")
+    @Authorization
+    public ResponseEntity logout(@CurrentUser UserEntity user) {
+        return new ResponseEntity(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 }

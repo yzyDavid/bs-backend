@@ -111,7 +111,7 @@ public class StudyController {
     public ResponseEntity wordbook(@CurrentUser UserEntity user, @RequestBody AddWordbookRequest request) {
         String wordbookName = request.getWordbook();
         if (!wordbookRepository.existsByWordbookName(wordbookName)) {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         WordbookEntity wordbook = wordbookRepository.findByWordbookName(wordbookName);
         Collection<WordEntity> wordsToAdd = wordbook.getWords();
@@ -127,6 +127,9 @@ public class StudyController {
             }
         }
         for (WordEntity word : wordsToAdd) {
+            if (userStudyingWordRepository.existsByUserIdAndWordId(user.getId(), word.getId())) {
+                continue;
+            }
             if (maxCount >= Config.WORDS_PER_DAY) {
                 ++maxRank;
                 maxCount = 0;
@@ -136,6 +139,7 @@ public class StudyController {
             relation.setWordId(word.getId());
             relation.setStudied(false);
             relation.setRank(maxRank);
+            userStudyingWordRepository.save(relation);
         }
         return new ResponseEntity(HttpStatus.OK);
     }
