@@ -23,7 +23,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
-import java.util.Collection;
+import java.util.Collections;
 
 /**
  * @author yzy
@@ -53,10 +53,13 @@ public class StudyController {
     @Authorization
     @GetMapping(path = "/today")
     ResponseEntity<TodayResponse> today(@CurrentUser UserEntity user) {
-        logger.info("/study/today");
         ArrayList<WordEntity> wordList = new ArrayList<>();
         Iterable<UserStudyingWordRelation> relations = userStudyingWordRepository.findAllByUserId(user.getId());
+        int totalCount = Config.MAX_BATCH_TODAY_WORDS;
         for (UserStudyingWordRelation relation : relations) {
+            if (totalCount == 0) {
+                break;
+            }
             if (!relation.shouldBeStudiedToday()) {
                 continue;
             }
@@ -67,6 +70,7 @@ public class StudyController {
             // TODO: need check existing?
             WordEntity word = wordRepository.getById(wordId);
             wordList.add(word);
+            --totalCount;
         }
         ArrayList<WordRepresentation> retList = new ArrayList<>();
         for (WordEntity entity : wordList) {
@@ -80,7 +84,7 @@ public class StudyController {
     ResponseEntity finishWord(@RequestBody FinishWordRequest request, @CurrentUser UserEntity user) {
         String wordName = request.getWord();
         if (!wordRepository.existsByWord(wordName)) {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         WordEntity word = wordRepository.getByWord(wordName);
         UserStudyingWordRelation relation = userStudyingWordRepository.findByUserIdAndWordId(user.getId(), word.getId());
@@ -114,7 +118,7 @@ public class StudyController {
             return new ResponseEntity(HttpStatus.BAD_REQUEST);
         }
         WordbookEntity wordbook = wordbookRepository.findByWordbookName(wordbookName);
-        Collection<WordEntity> wordsToAdd = wordbook.getWords();
+        ArrayList<WordEntity> wordsToAdd = new ArrayList<>(wordbook.getWords());
         Iterable<UserStudyingWordRelation> relations = userStudyingWordRepository.findAllByUserId(user.getId());
         int maxRank = 0, maxCount = 0;
         for (UserStudyingWordRelation relation : relations) {
@@ -126,6 +130,7 @@ public class StudyController {
                 ++maxCount;
             }
         }
+        Collections.shuffle(wordsToAdd);
         for (WordEntity word : wordsToAdd) {
             if (userStudyingWordRepository.existsByUserIdAndWordId(user.getId(), word.getId())) {
                 continue;
@@ -140,6 +145,7 @@ public class StudyController {
             relation.setStudied(false);
             relation.setRank(maxRank);
             userStudyingWordRepository.save(relation);
+            ++maxCount;
         }
         return new ResponseEntity(HttpStatus.OK);
     }

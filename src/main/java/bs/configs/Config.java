@@ -28,4 +28,6 @@ public class Config {
     public static final String DEV_KEY = "096c7b14-f466-4b99-8853-62bfc9216cad";
 
     public static final int WORDS_PER_DAY = 30;
+
+    public static final int MAX_BATCH_TODAY_WORDS = 10;
 }
