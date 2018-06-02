@@ -15,6 +15,7 @@ import bs.requests.FinishWordRequest;
 import bs.responses.StatsResponse;
 import bs.responses.TodayResponse;
 import bs.responses.WordRepresentation;
+import bs.services.StudyService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +40,11 @@ public class StudyController {
     private final UserStudyingWordRepository userStudyingWordRepository;
     private final WordRepository wordRepository;
     private final WordbookRepository wordbookRepository;
+    private final StudyService studyService;
 
     @Autowired
-    public StudyController(UserStudyingWordRepository userStudyingWordRepository, WordRepository wordRepository, WordbookRepository wordbookRepository) {
+    public StudyController(UserStudyingWordRepository userStudyingWordRepository, WordRepository wordRepository, WordbookRepository wordbookRepository, StudyService studyService) {
+        this.studyService = studyService;
         this.logger = LogFactory.getLog(this.getClass());
         this.userStudyingWordRepository = userStudyingWordRepository;
         this.wordRepository = wordRepository;
@@ -115,7 +118,8 @@ public class StudyController {
                 ++toStudyWords;
             }
         }
-        return new ResponseEntity<>(new StatsResponse(totalWords, toStudyWords, studiedWords, 0), HttpStatus.OK);
+        long todayToStudyWords = studyService.wordsToStudyTodayFor(user);
+        return new ResponseEntity<>(new StatsResponse(totalWords, toStudyWords, studiedWords, 0, todayToStudyWords), HttpStatus.OK);
     }
 
     /**

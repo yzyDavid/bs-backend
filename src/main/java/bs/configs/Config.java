@@ -29,5 +29,5 @@ public class Config {
 
     public static final int WORDS_PER_DAY = 30;
 
-    public static final int MAX_BATCH_TODAY_WORDS = 10;
+    public static final int MAX_BATCH_TODAY_WORDS = 500;
 }
