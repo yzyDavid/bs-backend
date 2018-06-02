@@ -12,6 +12,7 @@ import bs.repositories.WordRepository;
 import bs.repositories.WordbookRepository;
 import bs.requests.AddWordbookRequest;
 import bs.requests.FinishWordRequest;
+import bs.responses.StatsResponse;
 import bs.responses.TodayResponse;
 import bs.responses.WordRepresentation;
 import org.apache.commons.logging.Log;
@@ -23,6 +24,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 
 /**
@@ -101,8 +103,19 @@ public class StudyController {
      */
     @Authorization
     @GetMapping(path = "/stats")
-    public ResponseEntity stats(@CurrentUser UserEntity user) {
-        return new ResponseEntity(HttpStatus.OK);
+    public ResponseEntity<StatsResponse> stats(@CurrentUser UserEntity user) {
+        Collection<WordEntity> wordsStudying = user.getWordsStudying();
+        long totalWords = wordsStudying.size();
+        long toStudyWords = 0, studiedWords = 0;
+        Iterable<UserStudyingWordRelation> relations = userStudyingWordRepository.findAllByUserId(user.getId());
+        for (UserStudyingWordRelation relation : relations) {
+            if (relation.getRank() == 0) {
+                ++studiedWords;
+            } else {
+                ++toStudyWords;
+            }
+        }
+        return new ResponseEntity<>(new StatsResponse(totalWords, toStudyWords, studiedWords, 0), HttpStatus.OK);
     }
 
     /**
@@ -120,7 +133,7 @@ public class StudyController {
         WordbookEntity wordbook = wordbookRepository.findByWordbookName(wordbookName);
         ArrayList<WordEntity> wordsToAdd = new ArrayList<>(wordbook.getWords());
         Iterable<UserStudyingWordRelation> relations = userStudyingWordRepository.findAllByUserId(user.getId());
-        int maxRank = 0, maxCount = 0;
+        int maxRank = 30, maxCount = 0;
         for (UserStudyingWordRelation relation : relations) {
             if (relation.getRank() > maxRank) {
                 maxRank = relation.getRank();

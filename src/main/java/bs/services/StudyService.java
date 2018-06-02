@@ -29,7 +29,7 @@ public class StudyService {
     /**
      * minus all rank counters.
      *
-     * TODO: check is modified into DB.
+     * A 0 rank means the word is finished.
      */
     public void plusOneDay() {
         Iterable<UserEntity> users = userRepository.findAll();
@@ -48,6 +48,7 @@ public class StudyService {
                     relation.setRank(rank - 1);
                 }
                 relation.setStudied(false);
+                userStudyingWordRepository.save(relation);
             }
         }
     }
