@@ -7,10 +7,10 @@ import java.util.Collection;
  * <p>
  * today to study words list.
  */
-public class TodayResponse {
+public class WordsResponse {
     private final Collection<WordRepresentation> words;
 
-    public TodayResponse(Collection<WordRepresentation> words) {
+    public WordsResponse(Collection<WordRepresentation> words) {
         this.words = words;
     }
 

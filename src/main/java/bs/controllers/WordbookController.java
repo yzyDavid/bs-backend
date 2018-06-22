@@ -1,18 +1,25 @@
 package bs.controllers;
 
 import bs.annotations.Authorization;
+import bs.annotations.CurrentUser;
 import bs.configs.Config;
+import bs.entities.UserEntity;
+import bs.entities.WordEntity;
 import bs.entities.WordbookEntity;
 import bs.repositories.WordbookRepository;
 import bs.requests.AddWordbookRequest;
+import bs.responses.WordRepresentation;
 import bs.responses.WordbookRepresentation;
 import bs.responses.WordbookResponse;
-import bs.responses.WordsOfWordbookResponse;
+import bs.responses.WordsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -61,17 +68,26 @@ public class WordbookController {
      * TODO: replace with AddWordbookRequest
      * <p>
      * get words of a wordbook.
+     * if the wordbookName is not present in the request body, return the users user define book.
      *
-     * @param wordbookName
+     * @param
      * @return
      */
     @Authorization
     @GetMapping(path = "/words")
-    public ResponseEntity<WordsOfWordbookResponse> wordsOfWordbook(@RequestParam(name = "wordbook") String wordbookName) {
+    public ResponseEntity<WordsResponse> wordsOfWordbook(@RequestBody AddWordbookRequest request, @CurrentUser UserEntity user) {
+        String wordbookName = request.getWordbook();
+        if ((wordbookName == null) || "".equals(wordbookName)) {
+            wordbookName = Config.USER_WORDBOOK_PREFIX + user.getName();
+        }
         if (!wordbookRepository.existsByWordbookName(wordbookName)) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
         WordbookEntity wordbook = wordbookRepository.findByWordbookName(wordbookName);
-        return new ResponseEntity<>(new WordsOfWordbookResponse(wordbook.getWords()), HttpStatus.OK);
+        ArrayList<WordRepresentation> retList = new ArrayList<>();
+        for (WordEntity entity : wordbook.getWords()) {
+            retList.add(new WordRepresentation(entity));
+        }
+        return new ResponseEntity<>(new WordsResponse(retList), HttpStatus.OK);
     }
 }

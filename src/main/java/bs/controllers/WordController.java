@@ -8,7 +8,7 @@ import bs.entities.WordbookEntity;
 import bs.repositories.WordRepository;
 import bs.repositories.WordbookRepository;
 import bs.requests.AddWordRequest;
-import bs.responses.TodayResponse;
+import bs.responses.WordsResponse;
 import bs.responses.WordRepresentation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -72,12 +72,12 @@ public class WordController {
      */
     @Authorization
     @GetMapping(path = "/my")
-    public ResponseEntity<TodayResponse> myWord(@CurrentUser UserEntity user) {
+    public ResponseEntity<WordsResponse> myWord(@CurrentUser UserEntity user) {
         Collection<WordEntity> wordsStudying = user.getWordsStudying();
         ArrayList<WordRepresentation> retList = new ArrayList<>();
         for (WordEntity entity : wordsStudying) {
             retList.add(new WordRepresentation(entity));
         }
-        return new ResponseEntity<>(new TodayResponse(retList), HttpStatus.OK);
+        return new ResponseEntity<>(new WordsResponse(retList), HttpStatus.OK);
     }
 }

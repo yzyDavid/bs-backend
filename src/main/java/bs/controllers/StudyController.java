@@ -13,7 +13,7 @@ import bs.repositories.WordbookRepository;
 import bs.requests.AddWordbookRequest;
 import bs.requests.FinishWordRequest;
 import bs.responses.StatsResponse;
-import bs.responses.TodayResponse;
+import bs.responses.WordsResponse;
 import bs.responses.WordRepresentation;
 import bs.services.StudyService;
 import org.apache.commons.logging.Log;
@@ -57,7 +57,7 @@ public class StudyController {
      */
     @Authorization
     @GetMapping(path = "/today")
-    ResponseEntity<TodayResponse> today(@CurrentUser UserEntity user) {
+    ResponseEntity<WordsResponse> today(@CurrentUser UserEntity user) {
         ArrayList<WordEntity> wordList = new ArrayList<>();
         Iterable<UserStudyingWordRelation> relations = userStudyingWordRepository.findAllByUserId(user.getId());
         int totalCount = Config.MAX_BATCH_TODAY_WORDS;
@@ -81,7 +81,7 @@ public class StudyController {
         for (WordEntity entity : wordList) {
             retList.add(new WordRepresentation(entity));
         }
-        return new ResponseEntity<>(new TodayResponse(retList), HttpStatus.OK);
+        return new ResponseEntity<>(new WordsResponse(retList), HttpStatus.OK);
     }
 
     @Authorization
