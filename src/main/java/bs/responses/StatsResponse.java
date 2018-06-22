@@ -10,13 +10,15 @@ public class StatsResponse {
     private final long studiedWords;
     private final long customWords;
     private final long todayToStudyWords;
+    private final long recordDays;
 
-    public StatsResponse(long totalWords, long toStudyWords, long studiedWords, long customWords, long todayToStudyWords) {
+    public StatsResponse(long totalWords, long toStudyWords, long studiedWords, long customWords, long todayToStudyWords, long recordDays) {
         this.totalWords = totalWords;
         this.toStudyWords = toStudyWords;
         this.studiedWords = studiedWords;
         this.customWords = customWords;
         this.todayToStudyWords = todayToStudyWords;
+        this.recordDays = recordDays;
     }
 
     public long getTotalWords() {
@@ -37,5 +39,9 @@ public class StatsResponse {
 
     public long getTodayToStudyWords() {
         return todayToStudyWords;
+    }
+
+    public long getRecordDays() {
+        return recordDays;
     }
 }

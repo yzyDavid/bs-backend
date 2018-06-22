@@ -119,7 +119,8 @@ public class StudyController {
             }
         }
         long todayToStudyWords = studyService.wordsToStudyTodayFor(user);
-        return new ResponseEntity<>(new StatsResponse(totalWords, toStudyWords, studiedWords, 0, todayToStudyWords), HttpStatus.OK);
+        long recordDays = user.getStudiedDays();
+        return new ResponseEntity<>(new StatsResponse(totalWords, toStudyWords, studiedWords, 0, todayToStudyWords, recordDays), HttpStatus.OK);
     }
 
     /**
