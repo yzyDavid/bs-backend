@@ -16,10 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -74,7 +71,7 @@ public class WordbookController {
      * @return
      */
     @Authorization
-    @GetMapping(path = "/words")
+    @PostMapping(path = "/words")
     public ResponseEntity<WordsResponse> wordsOfWordbook(@RequestBody AddWordbookRequest request, @CurrentUser UserEntity user) {
         String wordbookName = request.getWordbook();
         if ((wordbookName == null) || "".equals(wordbookName)) {
