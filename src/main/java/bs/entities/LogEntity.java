@@ -3,6 +3,9 @@ package bs.entities;
 import javax.persistence.*;
 import java.util.Date;
 
+/**
+ * @author yzy
+ */
 @Entity
 public class LogEntity {
     @Id
