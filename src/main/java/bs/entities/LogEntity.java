@@ -19,6 +19,8 @@ public class LogEntity {
 
     private long studyCount;
 
+    private boolean reachTarget;
+
     public Long getId() {
         return id;
     }
@@ -49,5 +51,13 @@ public class LogEntity {
 
     public void setStudyCount(long studyCount) {
         this.studyCount = studyCount;
+    }
+
+    public boolean isReachTarget() {
+        return reachTarget;
+    }
+
+    public void setReachTarget(boolean reachTarget) {
+        this.reachTarget = reachTarget;
     }
 }

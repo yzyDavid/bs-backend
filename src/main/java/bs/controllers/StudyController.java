@@ -3,18 +3,17 @@ package bs.controllers;
 import bs.annotations.Authorization;
 import bs.annotations.CurrentUser;
 import bs.configs.Config;
-import bs.entities.UserEntity;
-import bs.entities.UserStudyingWordRelation;
-import bs.entities.WordEntity;
-import bs.entities.WordbookEntity;
+import bs.entities.*;
+import bs.repositories.LogRepository;
 import bs.repositories.UserStudyingWordRepository;
 import bs.repositories.WordRepository;
 import bs.repositories.WordbookRepository;
 import bs.requests.AddWordbookRequest;
 import bs.requests.FinishWordRequest;
 import bs.responses.StatsResponse;
-import bs.responses.WordsResponse;
 import bs.responses.WordRepresentation;
+import bs.responses.WordsResponse;
+import bs.services.LogService;
 import bs.services.StudyService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -41,10 +40,20 @@ public class StudyController {
     private final WordRepository wordRepository;
     private final WordbookRepository wordbookRepository;
     private final StudyService studyService;
+    private final LogRepository logRepository;
+    private final LogService logService;
 
     @Autowired
-    public StudyController(UserStudyingWordRepository userStudyingWordRepository, WordRepository wordRepository, WordbookRepository wordbookRepository, StudyService studyService) {
+    public StudyController(UserStudyingWordRepository userStudyingWordRepository,
+                           WordRepository wordRepository,
+                           WordbookRepository wordbookRepository,
+                           StudyService studyService,
+                           LogRepository logRepository,
+                           LogService logService
+    ) {
         this.studyService = studyService;
+        this.logRepository = logRepository;
+        this.logService = logService;
         this.logger = LogFactory.getLog(this.getClass());
         this.userStudyingWordRepository = userStudyingWordRepository;
         this.wordRepository = wordRepository;
@@ -85,6 +94,15 @@ public class StudyController {
     }
 
     @Authorization
+    @PostMapping(path = "/today")
+    ResponseEntity todayCheck(@CurrentUser UserEntity user) {
+        LogEntity log = logService.getLogEntityOfTodayByUser(user);
+        log.setReachTarget(true);
+        logRepository.save(log);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @Authorization
     @PostMapping(path = "/finish_word")
     ResponseEntity finishWord(@RequestBody FinishWordRequest request, @CurrentUser UserEntity user) {
         String wordName = request.getWord();
@@ -95,6 +113,11 @@ public class StudyController {
         UserStudyingWordRelation relation = userStudyingWordRepository.findByUserIdAndWordId(user.getId(), word.getId());
         relation.setStudied(true);
         userStudyingWordRepository.save(relation);
+
+        LogEntity log = logService.getLogEntityOfTodayByUser(user);
+        log.setStudyCount(log.getStudyCount() + 1);
+        logRepository.save(log);
+        
         return new ResponseEntity(HttpStatus.OK);
     }
 

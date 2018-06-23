@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 @Service
 public class StudyService {
     private final UserRepository userRepository;
-
     private final UserStudyingWordRepository userStudyingWordRepository;
 
     @Autowired
