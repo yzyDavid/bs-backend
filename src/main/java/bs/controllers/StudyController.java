@@ -117,7 +117,7 @@ public class StudyController {
         LogEntity log = logService.getLogEntityOfTodayByUser(user);
         log.setStudyCount(log.getStudyCount() + 1);
         logRepository.save(log);
-        
+
         return new ResponseEntity(HttpStatus.OK);
     }
 
@@ -142,7 +142,7 @@ public class StudyController {
             }
         }
         long todayToStudyWords = studyService.wordsToStudyTodayFor(user);
-        long recordDays = user.getStudiedDays();
+        long recordDays = logService.getCheckedDaysByUser(user);
         return new ResponseEntity<>(new StatsResponse(totalWords, toStudyWords, studiedWords, 0, todayToStudyWords, recordDays), HttpStatus.OK);
     }
 

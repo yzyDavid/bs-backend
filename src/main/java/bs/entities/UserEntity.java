@@ -5,7 +5,7 @@ import java.util.Collection;
 
 /**
  * @author yzy
- *
+ * <p>
  * TODO: index
  */
 @Entity
@@ -26,11 +26,9 @@ public class UserEntity {
     @Column(length = 60)
     private String salt;
 
-    private long studiedDays;
-
     @JoinTable(name = "USER_WORD_STUDYING",
-    joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "id")},
-    inverseJoinColumns = {@JoinColumn(name = "WORD_ID", referencedColumnName = "id")})
+            joinColumns = {@JoinColumn(name = "USER_ID", referencedColumnName = "id")},
+            inverseJoinColumns = {@JoinColumn(name = "WORD_ID", referencedColumnName = "id")})
     @ManyToMany
     private Collection<WordEntity> wordsStudying;
 
@@ -80,13 +78,5 @@ public class UserEntity {
 
     public void setWordsStudying(Collection<WordEntity> wordsStudying) {
         this.wordsStudying = wordsStudying;
-    }
-
-    public long getStudiedDays() {
-        return studiedDays;
-    }
-
-    public void setStudiedDays(long studiedDays) {
-        this.studiedDays = studiedDays;
     }
 }

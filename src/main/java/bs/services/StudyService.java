@@ -48,6 +48,9 @@ public class StudyService {
                 relation.setRank(rank - 1);
             }
             relation.setStudied(false);
+            if (relation.getRank() < 0) {
+                relation.setRank(0);
+            }
             userStudyingWordRepository.save(relation);
         }
     }
@@ -63,6 +66,9 @@ public class StudyService {
                 continue;
             }
             ++retval;
+            if (retval == Config.MAX_BATCH_TODAY_WORDS) {
+                break;
+            }
         }
         return retval;
     }

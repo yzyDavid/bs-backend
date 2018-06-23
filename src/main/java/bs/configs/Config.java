@@ -27,9 +27,15 @@ public class Config {
 
     public static final String DEV_KEY = "096c7b14-f466-4b99-8853-62bfc9216cad";
 
+    /**
+     * count of words per day when adding words from wordbook (making plan).
+     */
     public static final int WORDS_PER_DAY = 30;
 
-    public static final int MAX_BATCH_TODAY_WORDS = 500;
+    /**
+     * word we can get on one day's study.
+     */
+    public static final int MAX_BATCH_TODAY_WORDS = 50;
 
     public static final String USER_WORDBOOK_PREFIX = "user-def-";
 }

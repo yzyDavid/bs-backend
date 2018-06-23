@@ -40,4 +40,9 @@ public class LogService {
         logRepository.save(log);
         return log;
     }
+
+    public long getCheckedDaysByUser(UserEntity user) {
+        String email = user.getEmail();
+        return logRepository.getAllByEmail(email).size();
+    }
 }
