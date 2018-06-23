@@ -103,6 +103,13 @@ public class StudyController {
     }
 
     @Authorization
+    @GetMapping(path = "/fetch_next_day")
+    ResponseEntity fetchNextDay(@CurrentUser UserEntity user) {
+        studyService.plusOneDayFor(user);
+        return new ResponseEntity(HttpStatus.OK);
+    }
+
+    @Authorization
     @PostMapping(path = "/finish_word")
     ResponseEntity finishWord(@RequestBody FinishWordRequest request, @CurrentUser UserEntity user) {
         String wordName = request.getWord();
