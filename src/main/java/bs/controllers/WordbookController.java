@@ -62,7 +62,6 @@ public class WordbookController {
     }
 
     /**
-     * TODO: replace with AddWordbookRequest
      * <p>
      * get words of a wordbook.
      * if the wordbookName is not present in the request body, return the users user define book.

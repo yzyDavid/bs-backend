@@ -2,14 +2,15 @@ package bs.controllers;
 
 import bs.annotations.Authorization;
 import bs.annotations.CurrentUser;
+import bs.configs.Config;
 import bs.entities.UserEntity;
 import bs.entities.WordEntity;
 import bs.entities.WordbookEntity;
 import bs.repositories.WordRepository;
 import bs.repositories.WordbookRepository;
 import bs.requests.AddWordRequest;
-import bs.responses.WordsResponse;
 import bs.responses.WordRepresentation;
+import bs.responses.WordsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -46,6 +47,11 @@ public class WordController {
         }
 
         ArrayList<WordbookEntity> wordbooks = new ArrayList<>();
+        if (addWordRequest.getWordbooks() == null || addWordRequest.getWordbooks().size() == 0) {
+            ArrayList<String> self = new ArrayList<>();
+            self.add(Config.USER_WORDBOOK_PREFIX + user.getName());
+            addWordRequest.setWordbooks(self);
+        }
         for (String wordbook : addWordRequest.getWordbooks()) {
             if (!wordbookRepository.existsByWordbookName(wordbook)) {
                 return new ResponseEntity(HttpStatus.BAD_REQUEST);
